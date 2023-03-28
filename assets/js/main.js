@@ -68,8 +68,41 @@ function scrollActive() {
 window.addEventListener('scroll', scrollActive)
 /*=============== SHOW SCROLL UP ===============*/
 
+function scrollUp(){
+  const scrollUp = document.getElementById('scroll-up');
+
+  if(this.scrollY >= 350) scrollUp.classList.add("show-scroll"); else scrollUp.classList.remove("show-scroll");
+}
+
+window.addEventListener('scroll', scrollUp)
 
 /*=============== DARK LIGHT THEME ===============*/
 
+const themeButton = document.getElementById('theme-button')
+const darkTheme = 'dark-theme'
+const iconTheme = 'bx-sun'
 
+//previously selected topic (if user selected)
+const selectedTheme = localStorage.getItem('selected-theme')
+const selectedIcon = localStorage.getItem('selected-icon')
+
+// we obtain th current theme that the interface has by validating the dark-theme class
+const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
+const getCurrentIcon = () => document.body.classList.contains(iconTheme) ? 'bx bx-moon' : 'bx bx-sun'
+
+//we validate if the user previously chose a topic 
+if(selectedTheme){
+  // if the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
+  document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
+  document.classList[selectedIcon === 'bx bx-moon' ? 'add' : 'remove'](iconTheme)
+}
+
+// actvate / deactiate the theme manually with the button
+themeButton.addEventListener('click', () => {
+  document.body.classList.toggle(darkTheme)
+  themeButton.classList.toggle(iconTheme)
+  //we save the thee and the current icon that the user chose
+  localStorage.setItem('selected-theme', getCurrentTheme())
+  localStorage.setItem('selected-icon', getCurrentIcon()) 
+})
 /*=============== SCROLL REVEAL ANIMATION ===============*/
